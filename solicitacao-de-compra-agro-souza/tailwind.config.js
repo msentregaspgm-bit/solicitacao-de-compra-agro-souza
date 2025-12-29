@@ -1,1 +1,0 @@
-echo "module.exports = { content: ['./pages/**/*.{js,jsx}', './components/**/*.{js,jsx}'], theme: { extend: { colors: { agro: '#1b5e20', 'agro-light': '#43a047', }, }, }, plugins: [], };" > tailwind.config.js
