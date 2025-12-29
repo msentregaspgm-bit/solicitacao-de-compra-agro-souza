@@ -1,0 +1,1 @@
+echo "@tailwind base; @tailwind components; @tailwind utilities; body { @apply bg-agro-light text-white min-h-screen; font-family: 'Inter', sans-serif; } input, select, textarea { @apply text-black rounded p-2 w-full mb-3; } button { @apply bg-agro hover:bg-agro-light text-white font-bold py-2 px-4 rounded; }" > styles/globals.css
