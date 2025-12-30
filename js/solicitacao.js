@@ -1,9 +1,10 @@
 const pecas = [];
 
+/* ========= ADICIONAR PEÇA ========= */
 function adicionarPeca() {
-  const nome = nomePeca.value;
-  const codigo = codigoReferencia.value;
-  const impl = implemento.value;
+  const nome = nomePeca.value.trim();
+  const codigo = codigoReferencia.value.trim();
+  const impl = implemento.value.trim();
   const qtd = quantidade.value;
 
   if (!nome || !qtd) {
@@ -26,60 +27,79 @@ function adicionarPeca() {
   renderLista();
 }
 
+/* ========= LISTA DE PEÇAS ========= */
 function renderLista() {
   listaPecas.innerHTML = "";
 
-  pecas.forEach((p, i) => {
+  pecas.forEach(p => {
     const li = document.createElement("li");
-    li.innerText = `${p.nome} | Qtd: ${p.quantidade}`;
+    li.textContent = `${p.nome} | Qtd: ${p.quantidade}`;
     listaPecas.appendChild(li);
   });
 }
 
-document.getElementById("formSolicitacao").addEventListener("submit", async function (e) {
-  e.preventDefault();
+/* ========= SUBMIT ========= */
+document
+  .getElementById("formSolicitacao")
+  .addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-  if (pecas.length === 0) {
-    alert("Adicione ao menos uma peça");
-    return;
-  }
+    if (pecas.length === 0) {
+      alert("Adicione ao menos uma peça");
+      return;
+    }
 
-  let fotoBase64 = "";
-  const foto = document.getElementById("foto").files[0];
-  if (foto) fotoBase64 = await toBase64(foto);
+    const files = document.getElementById("foto").files;
+    const fotosBase64 = [];
 
-  const dados = {
-    tipo: "solicitacao",
-    pecas,
-    urgencia: urgencia.value,
-    observacoes: observacoes.value,
-    fotoBase64
-  };
+    for (const file of files) {
+      fotosBase64.push(await toBase64(file));
+    }
 
-  const res = await fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify(dados)
-  });
+    const dados = {
+      tipo: "solicitacao",
+      pecas,
+      urgencia: urgencia.value,
+      observacoes: observacoes.value,
+      fotosBase64
+    };
 
-  const json = await res.json();
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dados)
+    });
 
-  if (json.sucesso) {
-    const wa = `https://wa.me/?text=${encodeURIComponent(
-      `Solicitação ${json.numero}\nTotal de peças: ${pecas.length}\n${json.pdf}`
-    )}`;
+    const json = await res.json();
+
+    if (!json.sucesso) {
+      alert("Erro ao salvar solicitação");
+      return;
+    }
+
+    /* ========= WHATSAPP ========= */
+    let texto = `Solicitação ${json.numero}\n\n`;
+
+    pecas.forEach(p => {
+      texto += `• ${p.nome} – Qtd: ${p.quantidade}\n`;
+    });
+
+    texto += `\nPDF:\n${json.pdf}`;
+
+    const wa = `https://wa.me/?text=${encodeURIComponent(texto)}`;
 
     resultado.innerHTML = `
       ✅ Solicitação criada: <b>${json.numero}</b><br>
       📄 <a href="${json.pdf}" target="_blank">Ver PDF</a><br><br>
       📲 <a href="${wa}" target="_blank">Enviar WhatsApp</a>
     `;
-  }
-});
+  });
 
+/* ========= BASE64 ========= */
 function toBase64(file) {
   return new Promise(resolve => {
     const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
+    reader.onload = () => resolve(reader.result.split(",")[1]);
     reader.readAsDataURL(file);
   });
 }
