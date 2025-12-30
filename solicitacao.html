@@ -33,12 +33,11 @@
 
     h1 {
       text-align: center;
-      margin-bottom: 20px;
     }
 
     label {
       font-weight: bold;
-      margin-top: 12px;
+      margin-top: 10px;
       display: block;
     }
 
@@ -49,11 +48,12 @@
       font-size: 16px;
     }
 
-    .peca {
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin-bottom: 10px;
+    .peca-salva {
+      border: 1px solid #ccc;
       border-radius: 6px;
+      padding: 8px;
+      margin-top: 8px;
+      background: #f9f9f9;
     }
 
     button {
@@ -62,7 +62,7 @@
       border: none;
       border-radius: 6px;
       font-size: 18px;
-      margin-top: 15px;
+      margin-top: 12px;
     }
   </style>
 </head>
@@ -79,17 +79,21 @@
         <option value="Alta">Alta</option>
       </select>
 
-      <label>Peças</label>
-      <div id="listaPecas">
-        <div class="peca">
-          <input class="nome" placeholder="Nome da peça">
-          <input class="codigo" placeholder="Código">
-          <input class="implemento" placeholder="Implemento">
-          <input class="quantidade" type="number" placeholder="Quantidade">
-        </div>
-      </div>
+      <label>Nome da peça</label>
+      <input id="nome">
 
-      <button type="button" onclick="adicionarPeca()">Adicionar outra peça</button>
+      <label>Código</label>
+      <input id="codigo">
+
+      <label>Implemento</label>
+      <input id="implemento">
+
+      <label>Quantidade</label>
+      <input id="quantidade" type="number">
+
+      <button type="button" onclick="adicionarPeca()">+ Adicionar peça</button>
+
+      <div id="pecasSalvas"></div>
 
       <label>Observações</label>
       <textarea id="observacoes"></textarea>
@@ -97,8 +101,9 @@
       <label>Fotos da(s) peça(s)</label>
       <input type="file" id="fotos" accept="image/*" multiple>
 
-      <button onclick="salvarSolicitacao()">SALVAR SOLICITAÇÃO</button>
+      <button type="button" onclick="salvarSolicitacao()">SALVAR SOLICITAÇÃO</button>
     </div>
   </div>
 </body>
 </html>
+
