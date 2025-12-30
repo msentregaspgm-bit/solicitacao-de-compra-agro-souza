@@ -1,109 +1,52 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
   <title>Solicitação de Compra</title>
-
-  <script src="js/config.js"></script>
-  <script src="js/solicitacao.js" defer></script>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-    }
-
-    .container {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-    }
-
-    .card {
-      background: #fff;
-      width: 100%;
-      max-width: 600px;
-      padding: 20px;
-      border-radius: 10px;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    label {
-      font-weight: bold;
-      margin-top: 10px;
-      display: block;
-    }
-
-    input, textarea, select, button {
-      width: 100%;
-      margin-top: 5px;
-      padding: 10px;
-      font-size: 16px;
-    }
-
-    .peca-salva {
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      padding: 8px;
-      margin-top: 8px;
-      background: #f9f9f9;
-    }
-
-    button {
-      background: #2e7d32;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 18px;
-      margin-top: 12px;
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>Solicitação de Compra</h1>
 
-      <label>Urgência</label>
-      <select id="urgencia">
-        <option value="Baixa">Baixa</option>
-        <option value="Média">Média</option>
-        <option value="Alta">Alta</option>
-      </select>
+<div class="container full">
 
-      <label>Nome da peça</label>
-      <input id="nome">
+  <img src="logo.png" class="logo">
 
-      <label>Código</label>
-      <input id="codigo">
+  <h2>Solicitação de Compra</h2>
 
-      <label>Implemento</label>
-      <input id="implemento">
+  <form id="formSolicitacao">
 
-      <label>Quantidade</label>
-      <input id="quantidade" type="number">
+    <input id="nomePeca" placeholder="Nome da peça">
+    <input id="codigoReferencia" placeholder="Código de referência">
+    <input id="implemento" placeholder="Implemento">
+    <input id="quantidade" type="number" placeholder="Quantidade">
 
-      <button type="button" onclick="adicionarPeca()">+ Adicionar peça</button>
+    <button type="button" onclick="adicionarPeca()">
+      ➕ Adicionar peça
+    </button>
 
-      <div id="pecasSalvas"></div>
+    <ul id="listaPecas"></ul>
 
-      <label>Observações</label>
-      <textarea id="observacoes"></textarea>
+    <select id="urgencia">
+      <option value="Normal">Normal</option>
+      <option value="Urgente">Urgente</option>
+    </select>
 
-      <label>Fotos da(s) peça(s)</label>
-      <input type="file" id="fotos" accept="image/*" multiple>
+    <textarea id="observacoes" placeholder="Observações gerais"></textarea>
 
-      <button type="button" onclick="salvarSolicitacao()">SALVAR SOLICITAÇÃO</button>
-    </div>
-  </div>
+    <input type="file" id="foto">
+
+    <button type="submit">
+      💾 Salvar Solicitação
+    </button>
+
+  </form>
+
+  <div id="resultado" class="resultado"></div>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/solicitacao.js"></script>
+
 </body>
 </html>
-
