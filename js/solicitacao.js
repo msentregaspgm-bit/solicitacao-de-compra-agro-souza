@@ -1,22 +1,22 @@
-document.getElementById("formSolicitacao").addEventListener("submit", async e => {
+document.getElementById("formSolicitacao").addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  const foto = document.getElementById("foto").files[0];
+  const fotoArquivo = document.getElementById("foto").files[0];
   let fotoBase64 = "";
 
-  if (foto) {
-    fotoBase64 = await toBase64(foto);
+  if (fotoArquivo) {
+    fotoBase64 = await toBase64(fotoArquivo);
   }
 
   const dados = {
     tipo: "solicitacao",
     nomePeca: nomePeca.value,
-    codigoReferencia: codigo.value,
+    codigoReferencia: codigoReferencia.value,
     implemento: implemento.value,
     quantidade: quantidade.value,
     urgencia: urgencia.value,
-    observacoes: obs.value,
-    fotoBase64: fotoBase64
+    observacoes: observacoes.value,
+    fotoBase64
   };
 
   const res = await fetch(API_URL, {
@@ -27,27 +27,31 @@ document.getElementById("formSolicitacao").addEventListener("submit", async e =>
   const json = await res.json();
 
   if (json.sucesso) {
-    const msg = `
+    const mensagemWhatsApp = `
 Solicitação ${json.numero}
 Peça: ${dados.nomePeca}
+Quantidade: ${dados.quantidade}
 
-PDF:
+Link PDF:
 ${json.pdf}
     `;
-    const wa = "https://wa.me/?text=" + encodeURIComponent(msg);
-    resultado.innerHTML = `
-      <p>Solicitação criada: <b>${json.numero}</b></p>
-      <a href="${json.pdf}" target="_blank">📄 PDF</a><br><br>
-      <a href="${wa}" target="_blank">📲 Enviar WhatsApp</a>
+
+    const waLink = "https://wa.me/?text=" + encodeURIComponent(mensagemWhatsApp);
+
+    document.getElementById("resultado").innerHTML = `
+      ✅ Solicitação criada: <b>${json.numero}</b><br>
+      📄 <a href="${json.pdf}" target="_blank">Ver PDF</a><br><br>
+      📲 <a href="${waLink}" target="_blank">Enviar WhatsApp</a>
     `;
+  } else {
+    document.getElementById("resultado").innerText = "❌ Erro ao salvar.";
   }
 });
 
 function toBase64(file) {
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result);
-    r.onerror = rej;
-    r.readAsDataURL(file);
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsDataURL(file);
   });
 }
