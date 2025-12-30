@@ -7,20 +7,26 @@
 </head>
 <body>
 
-<h2>💰 Cotação de Compra</h2>
+<div class="container">
 
-<form id="formCotacao">
-  <input placeholder="Número da Solicitação (SC-...)" id="numeroSolicitacao" required><br>
-  <input placeholder="Fornecedor" id="fornecedor" required><br>
-  <input placeholder="Valor (ex: 4850)" id="valor" required><br>
-  <input placeholder="Prazo de entrega" id="prazo"><br>
-  <input placeholder="Condição de pagamento" id="pagamento"><br>
-  <input type="file" id="orcamento"><br><br>
+  <img src="logo.png" class="logo">
 
-  <button type="submit">Salvar Cotação</button>
-</form>
+  <h2>Cotação de Compra</h2>
 
-<div id="resultadoCotacao"></div>
+  <form id="formCotacao">
+    <input id="numeroSolicitacao" placeholder="Número da Solicitação" required>
+    <input id="fornecedor" placeholder="Fornecedor" required>
+    <input id="valor" placeholder="Valor (R$)" required>
+    <input id="prazo" placeholder="Prazo de entrega">
+    <input id="pagamento" placeholder="Condição de pagamento">
+    <input type="file" id="orcamento">
+
+    <button type="submit">Salvar Cotação</button>
+  </form>
+
+  <div id="resultadoCotacao" class="resultado"></div>
+
+</div>
 
 <script src="js/config.js"></script>
 <script src="js/cotacao.js"></script>
