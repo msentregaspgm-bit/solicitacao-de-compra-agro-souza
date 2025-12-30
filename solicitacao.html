@@ -20,16 +20,15 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 16px;
     }
 
     .card {
       background: #fff;
       width: 100%;
-      max-width: 500px;
+      max-width: 600px;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     h1 {
@@ -39,34 +38,31 @@
 
     label {
       font-weight: bold;
-      margin-top: 10px;
+      margin-top: 12px;
       display: block;
     }
 
     input, textarea, select, button {
       width: 100%;
       margin-top: 5px;
-      margin-bottom: 15px;
       padding: 10px;
       font-size: 16px;
     }
 
-    .linha-peca {
-      display: flex;
-      gap: 10px;
+    .peca {
+      border: 1px solid #ddd;
+      padding: 10px;
       margin-bottom: 10px;
-    }
-
-    .linha-peca input {
-      flex: 1;
+      border-radius: 6px;
     }
 
     button {
       background: #2e7d32;
-      color: #fff;
+      color: white;
       border: none;
       border-radius: 6px;
       font-size: 18px;
+      margin-top: 15px;
     }
   </style>
 </head>
@@ -84,14 +80,16 @@
       </select>
 
       <label>Peças</label>
-      <div id="pecas">
-        <div class="linha-peca">
-          <input class="nome-peca" placeholder="Nome da peça">
-          <input class="qtd-peca" type="number" placeholder="Qtd">
+      <div id="listaPecas">
+        <div class="peca">
+          <input class="nome" placeholder="Nome da peça">
+          <input class="codigo" placeholder="Código">
+          <input class="implemento" placeholder="Implemento">
+          <input class="quantidade" type="number" placeholder="Quantidade">
         </div>
       </div>
 
-      <button type="button" onclick="adicionarPeca()">+ Adicionar peça</button>
+      <button type="button" onclick="adicionarPeca()">Adicionar outra peça</button>
 
       <label>Observações</label>
       <textarea id="observacoes"></textarea>
@@ -99,7 +97,7 @@
       <label>Fotos da(s) peça(s)</label>
       <input type="file" id="fotos" accept="image/*" multiple>
 
-      <button onclick="enviarSolicitacao()">Enviar Solicitação</button>
+      <button onclick="salvarSolicitacao()">SALVAR SOLICITAÇÃO</button>
     </div>
   </div>
 </body>
