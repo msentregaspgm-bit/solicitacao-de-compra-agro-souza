@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Solicitação</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<h2>Solicitação de Compra</h2>
+
+<form id="formSolicitacao">
+  <input placeholder="Nome da peça" required id="nomePeca"><br>
+  <input placeholder="Código referência" id="codigo"><br>
+  <input placeholder="Implemento" id="implemento"><br>
+  <input type="number" placeholder="Quantidade" id="quantidade"><br>
+  <select id="urgencia">
+    <option>Normal</option>
+    <option>Urgente</option>
+  </select><br>
+  <textarea placeholder="Observações" id="obs"></textarea><br>
+  <input type="file" id="foto"><br><br>
+  <button type="submit">Salvar</button>
+</form>
+
+<div id="resultado"></div>
+
+<script src="js/config.js"></script>
+<script src="js/solicitacao.js"></script>
+</body>
+</html>
