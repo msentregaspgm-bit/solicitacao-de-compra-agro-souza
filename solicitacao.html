@@ -1,52 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solicitação de Compra</title>
-  <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/config.js"></script>
+  <script src="js/solicitacao.js" defer></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+    }
+
+    .container {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: #fff;
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+
+    input, textarea, select, button {
+      width: 100%;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    .linha-peca {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .linha-peca input {
+      flex: 1;
+    }
+
+    button {
+      background: #2e7d32;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+    }
+  </style>
 </head>
+
 <body>
+  <div class="container">
+    <div class="card">
+      <h1>Solicitação de Compra</h1>
 
-<div class="container full">
+      <label>Urgência</label>
+      <select id="urgencia">
+        <option value="Baixa">Baixa</option>
+        <option value="Média">Média</option>
+        <option value="Alta">Alta</option>
+      </select>
 
-  <img src="logo.png" class="logo">
+      <label>Peças</label>
+      <div id="pecas">
+        <div class="linha-peca">
+          <input class="nome-peca" placeholder="Nome da peça">
+          <input class="qtd-peca" type="number" placeholder="Qtd">
+        </div>
+      </div>
 
-  <h2>Solicitação de Compra</h2>
+      <button type="button" onclick="adicionarPeca()">+ Adicionar peça</button>
 
-  <form id="formSolicitacao">
+      <label>Observações</label>
+      <textarea id="observacoes"></textarea>
 
-    <input id="nomePeca" placeholder="Nome da peça">
-    <input id="codigoReferencia" placeholder="Código de referência">
-    <input id="implemento" placeholder="Implemento">
-    <input id="quantidade" type="number" placeholder="Quantidade">
+      <label>Fotos da(s) peça(s)</label>
+      <input type="file" id="fotos" accept="image/*" multiple>
 
-    <button type="button" onclick="adicionarPeca()">
-      ➕ Adicionar peça
-    </button>
-
-    <ul id="listaPecas"></ul>
-
-    <select id="urgencia">
-      <option value="Normal">Normal</option>
-      <option value="Urgente">Urgente</option>
-    </select>
-
-    <textarea id="observacoes" placeholder="Observações gerais"></textarea>
-
-    <input type="file" id="foto">
-
-    <button type="submit">
-      💾 Salvar Solicitação
-    </button>
-
-  </form>
-
-  <div id="resultado" class="resultado"></div>
-
-</div>
-
-<script src="js/config.js"></script>
-<script src="js/solicitacao.js"></script>
-
+      <button onclick="enviarSolicitacao()">Enviar Solicitação</button>
+    </div>
+  </div>
 </body>
 </html>
