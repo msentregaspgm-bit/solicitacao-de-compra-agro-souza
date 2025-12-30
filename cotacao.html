@@ -6,13 +6,24 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<h2>Cotação</h2>
 
-<p>
-⚠️ Nesta fase você só precisa abrir a planilha, ver o número da solicitação
-e registrar a cotação manualmente.  
-<br><br>
-👉 No próximo passo eu integro cotação + PDF + WhatsApp.
-</p>
+<h2>💰 Cotação de Compra</h2>
+
+<form id="formCotacao">
+  <input placeholder="Número da Solicitação (SC-...)" id="numeroSolicitacao" required><br>
+  <input placeholder="Fornecedor" id="fornecedor" required><br>
+  <input placeholder="Valor (ex: 4850)" id="valor" required><br>
+  <input placeholder="Prazo de entrega" id="prazo"><br>
+  <input placeholder="Condição de pagamento" id="pagamento"><br>
+  <input type="file" id="orcamento"><br><br>
+
+  <button type="submit">Salvar Cotação</button>
+</form>
+
+<div id="resultadoCotacao"></div>
+
+<script src="js/config.js"></script>
+<script src="js/cotacao.js"></script>
+
 </body>
 </html>
