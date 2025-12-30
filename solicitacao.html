@@ -2,33 +2,41 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Solicitação</title>
+  <title>Solicitação de Compra</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<h2>📋 Solicitação de Compra</h2>
+<div class="container">
 
-<form id="formSolicitacao">
-  <input placeholder="Nome da peça" required id="nomePeca"><br>
-  <input placeholder="Código de referência" id="codigoReferencia"><br>
-  <input placeholder="Implemento" id="implemento"><br>
-  <input type="number" placeholder="Quantidade" id="quantidade"><br>
-  <select id="urgencia">
-    <option value="Normal">Normal</option>
-    <option value="Urgente">Urgente</option>
-  </select><br>
-  <textarea placeholder="Observações" id="observacoes"></textarea><br>
-  <input type="file" id="foto"><br><br>
+  <img src="logo.png" class="logo">
 
-  <button type="submit">Salvar Solicitação</button>
-</form>
+  <h2>Solicitação de Compra</h2>
 
-<div id="resultado"></div>
+  <form id="formSolicitacao">
+    <input id="nomePeca" placeholder="Nome da peça" required>
+    <input id="codigoReferencia" placeholder="Código de referência">
+    <input id="implemento" placeholder="Implemento">
+    <input id="quantidade" type="number" placeholder="Quantidade">
+    
+    <select id="urgencia">
+      <option value="Normal">Normal</option>
+      <option value="Urgente">Urgente</option>
+    </select>
+
+    <textarea id="observacoes" placeholder="Observações"></textarea>
+
+    <input type="file" id="foto">
+
+    <button type="submit">Salvar Solicitação</button>
+  </form>
+
+  <div id="resultado" class="resultado"></div>
+
+</div>
 
 <script src="js/config.js"></script>
 <script src="js/solicitacao.js"></script>
 
 </body>
 </html>
-
