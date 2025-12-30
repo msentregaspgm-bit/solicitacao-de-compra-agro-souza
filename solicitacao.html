@@ -14,21 +14,31 @@
   <h2>Solicitação de Compra</h2>
 
   <form id="formSolicitacao">
-    <input id="nomePeca" placeholder="Nome da peça" required>
+
+    <input id="nomePeca" placeholder="Nome da peça">
     <input id="codigoReferencia" placeholder="Código de referência">
     <input id="implemento" placeholder="Implemento">
     <input id="quantidade" type="number" placeholder="Quantidade">
-    
+
+    <button type="button" onclick="adicionarPeca()">
+      ➕ Adicionar peça
+    </button>
+
+    <ul id="listaPecas"></ul>
+
     <select id="urgencia">
       <option value="Normal">Normal</option>
       <option value="Urgente">Urgente</option>
     </select>
 
-    <textarea id="observacoes" placeholder="Observações"></textarea>
+    <textarea id="observacoes" placeholder="Observações gerais"></textarea>
 
     <input type="file" id="foto">
 
-    <button type="submit">Salvar Solicitação</button>
+    <button type="submit">
+      💾 Salvar Solicitação
+    </button>
+
   </form>
 
   <div id="resultado" class="resultado"></div>
@@ -40,4 +50,3 @@
 
 </body>
 </html>
-
