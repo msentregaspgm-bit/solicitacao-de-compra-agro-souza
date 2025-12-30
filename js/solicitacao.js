@@ -30,12 +30,13 @@ function renderLista() {
   listaPecas.innerHTML = "";
   pecas.forEach(p => {
     const li = document.createElement("li");
-    li.textContent = `${p.nome} | Qtd: ${p.quantidade}`;
+    li.textContent =
+      `${p.nome} | Código: ${p.codigo || "-"} | Impl.: ${p.implemento || "-"} | Qtd: ${p.quantidade}`;
     listaPecas.appendChild(li);
   });
 }
 
-/* ===== SALVAR ===== */
+/* ===== SALVAR (IGUAL AO ANTES) ===== */
 async function salvarSolicitacao() {
 
   if (pecas.length === 0) {
@@ -43,6 +44,7 @@ async function salvarSolicitacao() {
     return;
   }
 
+  /* 🔴 MÚLTIPLAS FOTOS */
   const files = document.getElementById("foto").files;
   const fotosBase64 = [];
 
@@ -71,20 +73,24 @@ async function salvarSolicitacao() {
     return;
   }
 
-  /* 👇 NÃO ABRE NADA AUTOMÁTICO */
   mostrarOpcoes(json);
 }
 
-/* ===== OPÇÕES APÓS SALVAR ===== */
+/* ===== OPÇÕES (IGUAL AO ANTES, WHATSAPP CORRIGIDO) ===== */
 function mostrarOpcoes(json) {
 
-  let texto = `Solicitação ${json.numero}\n\n`;
-  pecas.forEach(p => {
-    texto += `• ${p.nome} – Qtd: ${p.quantidade}\n`;
-  });
-  texto += `\nPDF:\n${json.pdf}`;
+  let textoWhats =
+    `Solicitação de Compra: ${json.numero}\n\n`;
 
-  const wa = `https://wa.me/?text=${encodeURIComponent(texto)}`;
+  pecas.forEach(p => {
+    textoWhats +=
+      `• ${p.nome} – Qtd: ${p.quantidade}\n`;
+  });
+
+  textoWhats += `\nPDF:\n${json.pdf}`;
+
+  const wa =
+    `https://wa.me/?text=${encodeURIComponent(textoWhats)}`;
 
   resultado.innerHTML = `
     <div class="opcoes">
@@ -106,7 +112,8 @@ function mostrarOpcoes(json) {
 function toBase64(file) {
   return new Promise(resolve => {
     const reader = new FileReader();
-    reader.onload = () => resolve(reader.result.split(",")[1]);
+    reader.onload = () =>
+      resolve(reader.result.split(",")[1]);
     reader.readAsDataURL(file);
   });
 }
