@@ -2,19 +2,16 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
-  <title>Solicitação de Compra</title>
+  <title>Solicitação de Compra - Agro Souza</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <div class="container full">
-
   <img src="logo.png" class="logo">
-
   <h2>Solicitação de Compra</h2>
 
   <form id="formSolicitacao">
-
     <input id="nomePeca" placeholder="Nome da peça">
     <input id="codigoReferencia" placeholder="Código de referência">
     <input id="implemento" placeholder="Implemento">
@@ -33,19 +30,15 @@
 
     <input type="file" id="foto" multiple>
 
-    <button type="button" id="btnSalvar">💾 Salvar Solicitação</button>
-
+    <button type="button" onclick="salvarSolicitacao()">💾 Salvar Solicitação</button>
   </form>
 
   <div id="resultado" class="resultado"></div>
-
 </div>
 
-<!-- ✅ Scripts corrigidos com defer -->
-<script src="js/config.js" defer></script>
-<script src="js/solicitacao.js" defer></script>
+<!-- ✅ Scripts carregados no fim, sem 'defer' -->
+<script src="js/config.js"></script>
+<script src="js/solicitacao.js"></script>
 
 </body>
 </html>
-
- 
