@@ -76,7 +76,7 @@ async function salvarSolicitacao() {
   mostrarOpcoes(json);
 }
 
-/* ===== OPÇÕES (IGUAL AO ANTES, WHATSAPP CORRIGIDO) ===== */
+/* ===== OPÇÕES (IGUAL AO ANTES) ===== */
 function mostrarOpcoes(json) {
 
   let textoWhats =
@@ -117,3 +117,10 @@ function toBase64(file) {
     reader.readAsDataURL(file);
   });
 }
+
+/* =====================================================
+   🔴 ÚNICA CORREÇÃO NECESSÁRIA (ESCOPO GLOBAL)
+   NÃO MUDA MAIS NADA
+===================================================== */
+window.adicionarPeca = adicionarPeca;
+window.salvarSolicitacao = salvarSolicitacao;
