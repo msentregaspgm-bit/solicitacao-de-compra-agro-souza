@@ -98,7 +98,7 @@ async function salvarSolicitacao() {
 }
 
 /* =====================================================
-   MOSTRAR RESULTADO
+   MOSTRAR RESULTADO / PDF / WHATSAPP
 ===================================================== */
 function mostrarOpcoes(json) {
   let textoWhats = `Solicitação de Compra: ${json.numero}\n\n`;
