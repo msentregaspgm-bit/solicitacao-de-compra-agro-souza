@@ -153,4 +153,18 @@ function toBase64(file) {
 window.adicionarPeca = adicionarPeca;
 window.salvarSolicitacao = salvarSolicitacao;
 
- 
+/* =====================================================
+   ✅ FIX DO BOTÃO — GARANTE O CLIQUE FUNCIONANDO
+===================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+  const botao = document.querySelector('button[type="submit"], #btnSalvar');
+  if (botao) {
+    botao.addEventListener("click", e => {
+      e.preventDefault();
+      console.log("✅ Botão clicado — executando salvarSolicitacao()");
+      salvarSolicitacao();
+    });
+  } else {
+    console.error("❌ Botão de salvar não encontrado no DOM!");
+  }
+});
