@@ -39,12 +39,14 @@ function renderLista() {
 /* ===== SALVAR (IGUAL AO ANTES) ===== */
 async function salvarSolicitacao() {
 
+  console.log("🟢 BOTÃO SALVAR CLICADO"); // 🔴 LINHA 1 (DEBUG)
+
   if (pecas.length === 0) {
     alert("Adicione ao menos uma peça");
     return;
   }
 
-  /* 🔴 MÚLTIPLAS FOTOS */
+  /* 🔴 MÚLTIPLAS FOTOS (MANTIDO) */
   const files = document.getElementById("foto").files;
   const fotosBase64 = [];
 
@@ -118,9 +120,6 @@ function toBase64(file) {
   });
 }
 
-/* =====================================================
-   🔴 ÚNICA CORREÇÃO NECESSÁRIA (ESCOPO GLOBAL)
-   NÃO MUDA MAIS NADA
-===================================================== */
-window.adicionarPeca = adicionarPeca;
+/* 🔴 🔴 🔴 ÚNICA CORREÇÃO REAL 🔴 🔴 🔴 */
 window.salvarSolicitacao = salvarSolicitacao;
+window.adicionarPeca = adicionarPeca;
