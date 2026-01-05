@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <title>Solicitação de Compra</title>
@@ -20,9 +20,7 @@
     <input id="implemento" placeholder="Implemento">
     <input id="quantidade" type="number" placeholder="Quantidade">
 
-    <button type="button" onclick="adicionarPeca()">
-      ➕ Adicionar peça
-    </button>
+    <button type="button" onclick="adicionarPeca()">➕ Adicionar peça</button>
 
     <ul id="listaPecas"></ul>
 
@@ -33,11 +31,9 @@
 
     <textarea id="observacoes" placeholder="Observações gerais"></textarea>
 
-    <input type="file" id="foto">
+    <input type="file" id="foto" multiple>
 
-    <button type="button" onclick="salvarSolicitacao()">
-      💾 Salvar Solicitação
-    </button>
+    <button type="button" id="btnSalvar">💾 Salvar Solicitação</button>
 
   </form>
 
@@ -45,10 +41,11 @@
 
 </div>
 
-<!-- ✅ Scripts com defer -->
+<!-- ✅ Scripts corrigidos com defer -->
 <script src="js/config.js" defer></script>
 <script src="js/solicitacao.js" defer></script>
 
 </body>
 </html>
 
+ 
