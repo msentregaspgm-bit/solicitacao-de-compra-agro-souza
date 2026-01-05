@@ -1,24 +1,34 @@
 /* =====================================================
-   FIX OBRIGATÓRIO – REFERÊNCIAS DOS ELEMENTOS
-   (sem isso o JS quebra e o botão não funciona)
+   ELEMENTOS
 ===================================================== */
-const nomePeca = document.getElementById("nomePeca");
-const codigoReferencia = document.getElementById("codigoReferencia");
-const implemento = document.getElementById("implemento");
-const quantidade = document.getElementById("quantidade");
-const urgencia = document.getElementById("urgencia");
-const observacoes = document.getElementById("observacoes");
-const listaPecas = document.getElementById("listaPecas");
-const resultado = document.getElementById("resultado");
-const inputFoto = document.getElementById("foto");
+let nomePeca, codigoReferencia, implemento, quantidade, urgencia, observacoes, listaPecas, resultado, inputFoto;
+let pecas = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+  nomePeca = document.getElementById("nomePeca");
+  codigoReferencia = document.getElementById("codigoReferencia");
+  implemento = document.getElementById("implemento");
+  quantidade = document.getElementById("quantidade");
+  urgencia = document.getElementById("urgencia");
+  observacoes = document.getElementById("observacoes");
+  listaPecas = document.getElementById("listaPecas");
+  resultado = document.getElementById("resultado");
+  inputFoto = document.getElementById("foto");
+
+  const botao = document.getElementById("btnSalvar");
+  if (botao) {
+    botao.addEventListener("click", e => {
+      e.preventDefault();
+      console.log("✅ Botão clicado — executando salvarSolicitacao()");
+      salvarSolicitacao();
+    });
+  } else {
+    console.error("❌ Botão de salvar não encontrado no DOM!");
+  }
+});
 
 /* =====================================================
-   DADOS (IGUAL AO SEU)
-===================================================== */
-const pecas = [];
-
-/* =====================================================
-   ADICIONAR PEÇA (IGUAL AO SEU)
+   ADICIONAR PEÇA
 ===================================================== */
 function adicionarPeca() {
   const nome = nomePeca.value.trim();
@@ -31,49 +41,34 @@ function adicionarPeca() {
     return;
   }
 
-  pecas.push({
-    nome,
-    codigo,
-    implemento: impl,
-    quantidade: qtd
-  });
-
+  pecas.push({ nome, codigo, implemento: impl, quantidade: qtd });
   nomePeca.value = "";
   codigoReferencia.value = "";
   implemento.value = "";
   quantidade.value = "";
-
   renderLista();
 }
 
-/* =====================================================
-   LISTA DE PEÇAS (IGUAL AO SEU)
-===================================================== */
 function renderLista() {
   listaPecas.innerHTML = "";
-
   pecas.forEach(p => {
     const li = document.createElement("li");
-    li.textContent =
-      `${p.nome} | Código: ${p.codigo || "-"} | Impl.: ${p.implemento || "-"} | Qtd: ${p.quantidade}`;
+    li.textContent = `${p.nome} | Código: ${p.codigo || "-"} | Impl.: ${p.implemento || "-"} | Qtd: ${p.quantidade}`;
     listaPecas.appendChild(li);
   });
 }
 
 /* =====================================================
-   SALVAR SOLICITAÇÃO (IGUAL AO SEU)
+   SALVAR SOLICITAÇÃO
 ===================================================== */
 async function salvarSolicitacao() {
-
   if (pecas.length === 0) {
     alert("Adicione ao menos uma peça");
     return;
   }
 
-  /* 🔴 MÚLTIPLAS FOTOS – MANTIDO */
   const files = inputFoto.files;
   const fotosBase64 = [];
-
   for (const file of files) {
     fotosBase64.push(await toBase64(file));
   }
@@ -86,89 +81,48 @@ async function salvarSolicitacao() {
     fotosBase64
   };
 
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(dados)
-  });
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dados)
+    });
 
-  const json = await res.json();
-
-  if (!json.sucesso) {
-    alert("Erro ao salvar solicitação");
-    return;
+    const json = await res.json();
+    if (!json.sucesso) {
+      alert("Erro ao salvar solicitação");
+      console.log(json);
+      return;
+    }
+    mostrarOpcoes(json);
+  } catch (err) {
+    alert("Erro ao enviar solicitação: " + err.message);
+    console.error(err);
   }
-
-  mostrarOpcoes(json);
 }
 
-/* =====================================================
-   OPÇÕES PDF / WHATSAPP (IGUAL AO SEU)
-===================================================== */
 function mostrarOpcoes(json) {
-
-  let textoWhats =
-    `Solicitação de Compra: ${json.numero}\n\n`;
-
+  let textoWhats = `Solicitação de Compra: ${json.numero}\n\n`;
   pecas.forEach(p => {
     textoWhats += `• ${p.nome} – Qtd: ${p.quantidade}\n`;
   });
-
   textoWhats += `\nPDF:\n${json.pdf}`;
-
-  const wa =
-    `https://wa.me/?text=${encodeURIComponent(textoWhats)}`;
+  const wa = `https://wa.me/?text=${encodeURIComponent(textoWhats)}`;
 
   resultado.innerHTML = `
     <div class="opcoes">
       <h3>Solicitação salva com sucesso</h3>
       <p><b>Número:</b> ${json.numero}</p>
-
-      <a href="${json.pdf}" target="_blank" class="btn">
-        📄 Ver PDF
-      </a>
-
-      <a href="${wa}" target="_blank" class="btn">
-        📲 Enviar WhatsApp
-      </a>
+      <a href="${json.pdf}" target="_blank" class="btn">📄 Ver PDF</a>
+      <a href="${wa}" target="_blank" class="btn">📲 Enviar WhatsApp</a>
     </div>
   `;
 }
 
-/* =====================================================
-   BASE64 (IGUAL AO SEU)
-===================================================== */
 function toBase64(file) {
   return new Promise(resolve => {
     const reader = new FileReader();
-    reader.onload = () =>
-      resolve(reader.result.split(",")[1]);
+    reader.onload = () => resolve(reader.result.split(",")[1]);
     reader.readAsDataURL(file);
   });
 }
-
-/* =====================================================
-   FIX FINAL – EXPOR FUNÇÕES AO HTML
-===================================================== */
-window.adicionarPeca = adicionarPeca;
-window.salvarSolicitacao = salvarSolicitacao;
-
-/* =====================================================
-   ✅ FIX DO BOTÃO — GARANTE O CLIQUE FUNCIONANDO
-===================================================== */
-document.addEventListener("DOMContentLoaded", () => {
-  // Seleciona o botão que contém o texto "Salvar Solicitação"
-  const botoes = document.querySelectorAll("button");
-  const botao = Array.from(botoes).find(b => b.textContent.includes("Salvar"));
-
-  if (botao) {
-    botao.addEventListener("click", e => {
-      e.preventDefault();
-      console.log("✅ Botão clicado — executando salvarSolicitacao()");
-      salvarSolicitacao();
-    });
-  } else {
-    console.error("❌ Botão de salvar não encontrado no DOM!");
-  }
-});
-
