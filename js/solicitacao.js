@@ -1,31 +1,17 @@
 /* =====================================================
-   ELEMENTOS
+   ELEMENTOS E DADOS
 ===================================================== */
-let nomePeca, codigoReferencia, implemento, quantidade, urgencia, observacoes, listaPecas, resultado, inputFoto;
-let pecas = [];
+const pecas = [];
 
-document.addEventListener("DOMContentLoaded", () => {
-  nomePeca = document.getElementById("nomePeca");
-  codigoReferencia = document.getElementById("codigoReferencia");
-  implemento = document.getElementById("implemento");
-  quantidade = document.getElementById("quantidade");
-  urgencia = document.getElementById("urgencia");
-  observacoes = document.getElementById("observacoes");
-  listaPecas = document.getElementById("listaPecas");
-  resultado = document.getElementById("resultado");
-  inputFoto = document.getElementById("foto");
-
-  const botao = document.getElementById("btnSalvar");
-  if (botao) {
-    botao.addEventListener("click", e => {
-      e.preventDefault();
-      console.log("✅ Botão clicado — executando salvarSolicitacao()");
-      salvarSolicitacao();
-    });
-  } else {
-    console.error("❌ Botão de salvar não encontrado no DOM!");
-  }
-});
+const nomePeca = document.getElementById("nomePeca");
+const codigoReferencia = document.getElementById("codigoReferencia");
+const implemento = document.getElementById("implemento");
+const quantidade = document.getElementById("quantidade");
+const urgencia = document.getElementById("urgencia");
+const observacoes = document.getElementById("observacoes");
+const listaPecas = document.getElementById("listaPecas");
+const resultado = document.getElementById("resultado");
+const inputFoto = document.getElementById("foto");
 
 /* =====================================================
    ADICIONAR PEÇA
@@ -42,13 +28,18 @@ function adicionarPeca() {
   }
 
   pecas.push({ nome, codigo, implemento: impl, quantidade: qtd });
+
   nomePeca.value = "";
   codigoReferencia.value = "";
   implemento.value = "";
   quantidade.value = "";
+
   renderLista();
 }
 
+/* =====================================================
+   LISTAR PEÇAS
+===================================================== */
 function renderLista() {
   listaPecas.innerHTML = "";
   pecas.forEach(p => {
@@ -69,6 +60,7 @@ async function salvarSolicitacao() {
 
   const files = inputFoto.files;
   const fotosBase64 = [];
+
   for (const file of files) {
     fotosBase64.push(await toBase64(file));
   }
@@ -82,6 +74,7 @@ async function salvarSolicitacao() {
   };
 
   try {
+    console.log("📤 Enviando solicitação para API...");
     const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -89,11 +82,14 @@ async function salvarSolicitacao() {
     });
 
     const json = await res.json();
+    console.log("📥 Resposta recebida:", json);
+
     if (!json.sucesso) {
       alert("Erro ao salvar solicitação");
       console.log(json);
       return;
     }
+
     mostrarOpcoes(json);
   } catch (err) {
     alert("Erro ao enviar solicitação: " + err.message);
@@ -101,6 +97,9 @@ async function salvarSolicitacao() {
   }
 }
 
+/* =====================================================
+   MOSTRAR RESULTADO
+===================================================== */
 function mostrarOpcoes(json) {
   let textoWhats = `Solicitação de Compra: ${json.numero}\n\n`;
   pecas.forEach(p => {
@@ -119,6 +118,9 @@ function mostrarOpcoes(json) {
   `;
 }
 
+/* =====================================================
+   CONVERTER FOTO PARA BASE64
+===================================================== */
 function toBase64(file) {
   return new Promise(resolve => {
     const reader = new FileReader();
