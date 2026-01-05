@@ -28,12 +28,6 @@ function adicionarPeca() {
   }
 
   pecas.push({ nome, codigo, implemento: impl, quantidade: qtd });
-
-  nomePeca.value = "";
-  codigoReferencia.value = "";
-  implemento.value = "";
-  quantidade.value = "";
-
   renderLista();
 }
 
@@ -51,6 +45,7 @@ function renderLista() {
 
 /* =====================================================
    SALVAR SOLICITAÇÃO
+   (envia direto ao Apps Script sem proxy)
 ===================================================== */
 async function salvarSolicitacao() {
   if (pecas.length === 0) {
@@ -74,7 +69,7 @@ async function salvarSolicitacao() {
   };
 
   try {
-    console.log("📤 Enviando solicitação para API...");
+    console.log("📤 Salvando solicitação...");
     const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -82,44 +77,37 @@ async function salvarSolicitacao() {
     });
 
     const json = await res.json();
-    console.log("📥 Resposta recebida:", json);
+    console.log("📥 Resposta:", json);
 
     if (!json.sucesso) {
-      alert("Erro ao salvar solicitação");
-      console.log(json);
+      alert("Erro ao salvar nuvem");
       return;
     }
-
     mostrarOpcoes(json);
   } catch (err) {
-    alert("Erro ao enviar solicitação: " + err.message);
-    console.error(err);
+    alert("Erro ao enviar: " + err.message);
   }
 }
 
 /* =====================================================
-   MOSTRAR RESULTADO / PDF / WHATSAPP
+   MOSTRAR RESULTADO
 ===================================================== */
 function mostrarOpcoes(json) {
-  let textoWhats = `Solicitação de Compra: ${json.numero}\n\n`;
+  let texto = `Solicitação de Compra: ${json.numero}\n\n`;
   pecas.forEach(p => {
-    textoWhats += `• ${p.nome} – Qtd: ${p.quantidade}\n`;
+    texto += `• ${p.nome} – Qtd: ${p.quantidade}\n`;
   });
-  textoWhats += `\nPDF:\n${json.pdf}`;
-  const wa = `https://wa.me/?text=${encodeURIComponent(textoWhats)}`;
+  texto += `\nPDF:\n${json.pdf}`;
 
   resultado.innerHTML = `
-    <div class="opcoes">
-      <h3>Solicitação salva com sucesso</h3>
-      <p><b>Número:</b> ${json.numero}</p>
-      <a href="${json.pdf}" target="_blank" class="btn">📄 Ver PDF</a>
-      <a href="${wa}" target="_blank" class="btn">📲 Enviar WhatsApp</a>
-    </div>
+    <p>Solicitação salva com sucesso!</p>
+    <a href="${json.pdf}" target="_blank">Ver PDF</a>
+    <a href="https://wa.me/?text=${encodeURIComponent(texto)}" target="_blank">Enviar WhatsApp</a>
   `;
 }
 
 /* =====================================================
-   CONVERTER FOTO PARA BASE64
+   BASE64
 ===================================================== */
 function toBase64(file) {
   return new Promise(resolve => {
