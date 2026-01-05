@@ -1,5 +1,25 @@
+/* =====================================================
+   FIX OBRIGATÓRIO – REFERÊNCIAS DOS ELEMENTOS
+   (sem isso o JS quebra e o botão não funciona)
+===================================================== */
+const nomePeca = document.getElementById("nomePeca");
+const codigoReferencia = document.getElementById("codigoReferencia");
+const implemento = document.getElementById("implemento");
+const quantidade = document.getElementById("quantidade");
+const urgencia = document.getElementById("urgencia");
+const observacoes = document.getElementById("observacoes");
+const listaPecas = document.getElementById("listaPecas");
+const resultado = document.getElementById("resultado");
+const inputFoto = document.getElementById("foto");
+
+/* =====================================================
+   DADOS (IGUAL AO SEU)
+===================================================== */
 const pecas = [];
 
+/* =====================================================
+   ADICIONAR PEÇA (IGUAL AO SEU)
+===================================================== */
 function adicionarPeca() {
   const nome = nomePeca.value.trim();
   const codigo = codigoReferencia.value.trim();
@@ -26,8 +46,12 @@ function adicionarPeca() {
   renderLista();
 }
 
+/* =====================================================
+   LISTA DE PEÇAS (IGUAL AO SEU)
+===================================================== */
 function renderLista() {
   listaPecas.innerHTML = "";
+
   pecas.forEach(p => {
     const li = document.createElement("li");
     li.textContent =
@@ -36,18 +60,18 @@ function renderLista() {
   });
 }
 
-/* ===== SALVAR (IGUAL AO ANTES) ===== */
+/* =====================================================
+   SALVAR SOLICITAÇÃO (IGUAL AO SEU)
+===================================================== */
 async function salvarSolicitacao() {
-
-  console.log("🟢 BOTÃO SALVAR CLICADO"); // 🔴 LINHA 1 (DEBUG)
 
   if (pecas.length === 0) {
     alert("Adicione ao menos uma peça");
     return;
   }
 
-  /* 🔴 MÚLTIPLAS FOTOS (MANTIDO) */
-  const files = document.getElementById("foto").files;
+  /* 🔴 MÚLTIPLAS FOTOS – MANTIDO */
+  const files = inputFoto.files;
   const fotosBase64 = [];
 
   for (const file of files) {
@@ -78,15 +102,16 @@ async function salvarSolicitacao() {
   mostrarOpcoes(json);
 }
 
-/* ===== OPÇÕES (IGUAL AO ANTES) ===== */
+/* =====================================================
+   OPÇÕES PDF / WHATSAPP (IGUAL AO SEU)
+===================================================== */
 function mostrarOpcoes(json) {
 
   let textoWhats =
     `Solicitação de Compra: ${json.numero}\n\n`;
 
   pecas.forEach(p => {
-    textoWhats +=
-      `• ${p.nome} – Qtd: ${p.quantidade}\n`;
+    textoWhats += `• ${p.nome} – Qtd: ${p.quantidade}\n`;
   });
 
   textoWhats += `\nPDF:\n${json.pdf}`;
@@ -110,7 +135,9 @@ function mostrarOpcoes(json) {
   `;
 }
 
-/* ===== BASE64 ===== */
+/* =====================================================
+   BASE64 (IGUAL AO SEU)
+===================================================== */
 function toBase64(file) {
   return new Promise(resolve => {
     const reader = new FileReader();
@@ -120,6 +147,10 @@ function toBase64(file) {
   });
 }
 
-/* 🔴 🔴 🔴 ÚNICA CORREÇÃO REAL 🔴 🔴 🔴 */
-window.salvarSolicitacao = salvarSolicitacao;
+/* =====================================================
+   FIX FINAL – EXPOR FUNÇÕES AO HTML
+===================================================== */
 window.adicionarPeca = adicionarPeca;
+window.salvarSolicitacao = salvarSolicitacao;
+
+ 
