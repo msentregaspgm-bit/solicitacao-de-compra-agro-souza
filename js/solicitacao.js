@@ -157,7 +157,10 @@ window.salvarSolicitacao = salvarSolicitacao;
    ✅ FIX DO BOTÃO — GARANTE O CLIQUE FUNCIONANDO
 ===================================================== */
 document.addEventListener("DOMContentLoaded", () => {
-  const botao = document.querySelector('button[type="submit"], #btnSalvar');
+  // Seleciona o botão que contém o texto "Salvar Solicitação"
+  const botoes = document.querySelectorAll("button");
+  const botao = Array.from(botoes).find(b => b.textContent.includes("Salvar"));
+
   if (botao) {
     botao.addEventListener("click", e => {
       e.preventDefault();
@@ -168,3 +171,4 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("❌ Botão de salvar não encontrado no DOM!");
   }
 });
+
