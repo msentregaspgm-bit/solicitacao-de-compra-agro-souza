@@ -1,9 +1,7 @@
 {
   "version": 2,
   "functions": {
-    "api/proxy.js": {
-      "runtime": "nodejs18.x"
-    }
+    "api/proxy.js": { "runtime": "nodejs18.x" }
   },
   "routes": [
     { "src": "/api/proxy", "dest": "/api/proxy.js" }
