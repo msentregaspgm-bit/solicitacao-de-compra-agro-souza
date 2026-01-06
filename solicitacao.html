@@ -8,14 +8,15 @@
 <body>
 
 <div class="container full">
-  <img src="logo.png" class="logo">
+  <img src="logo.png" class="logo" alt="Agro Souza">
+
   <h2>Solicitação de Compra</h2>
 
   <form id="formSolicitacao">
-    <input id="nomePeca" placeholder="Nome da peça">
+    <input id="nomePeca" placeholder="Nome da peça" required>
     <input id="codigoReferencia" placeholder="Código de referência">
     <input id="implemento" placeholder="Implemento">
-    <input id="quantidade" type="number" placeholder="Quantidade">
+    <input id="quantidade" type="number" placeholder="Quantidade" min="1" required>
 
     <button type="button" onclick="adicionarPeca()">➕ Adicionar peça</button>
 
@@ -30,18 +31,15 @@
 
     <input type="file" id="foto" multiple>
 
-    <button type="button" onclick="salvarSolicitacao()">
-  💾 Salvar Solicitação
-</button>
+    <button type="button" onclick="salvarSolicitacao()">💾 Salvar Solicitação</button>
+  </form>
 
   <div id="resultado" class="resultado"></div>
 </div>
 
-<!-- ✅ Scripts carregados no fim, sem 'defer' -->
+<!-- ✅ Scripts no fim para evitar erro de DOM -->
 <script src="js/config.js"></script>
 <script src="js/solicitacao.js"></script>
 
 </body>
 </html>
-
-
